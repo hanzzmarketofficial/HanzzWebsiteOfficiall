@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Intro</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: black;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    #video-container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+    }
+    video, #freeze-frame {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    #freeze-frame {
+      display: none;
+    }
+    #home-btn {
+      position: absolute;
+      bottom: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 15px 40px;
+      font-size: 20px;
+      background: linear-gradient(135deg, #FFA500, #007BFF);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      display: none;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+    #home-btn:hover {
+      background: linear-gradient(135deg, #FF8C00, #0056b3);
+      transform: translateX(-50%) scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <div id="video-container">
+    <video id="introVideo" autoplay muted>
+      <source src="https://files.catbox.moe/qdx8ye.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <canvas id="freeze-frame"></canvas>
+    <button id="home-btn" onclick="location.href='index.html'">Home</button>
+  </div>
+
+  <script>
+    const video = document.getElementById('introVideo');
+    const canvas = document.getElementById('freeze-frame');
+    const ctx = canvas.getContext('2d');
+    const button = document.getElementById('home-btn');
+
+    video.addEventListener('ended', () => {
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      canvas.style.display = 'block';
+      video.style.display = 'none';
+      button.style.display = 'block';
+    });
+  </script>
+</body>
+</html>
